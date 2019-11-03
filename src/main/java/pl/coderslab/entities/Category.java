@@ -19,8 +19,8 @@ public class Category {
 
     @ManyToMany
     @JoinTable(name = "categories_articles",
-                joinColumns = @JoinColumn(name = "category_id"),
-                inverseJoinColumns = @JoinColumn(name = "article_id"))
+            joinColumns = @JoinColumn(name = "category_id"),
+            inverseJoinColumns = @JoinColumn(name = "article_id"))
     private List<Article> articles = new ArrayList<>();
 
     public Category() {}
