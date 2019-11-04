@@ -11,6 +11,7 @@ import pl.coderslab.repositories.ArticleDao;
 import pl.coderslab.repositories.AuthorDao;
 import pl.coderslab.repositories.CategoryDao;
 
+import javax.persistence.EntityManager;
 import java.awt.print.Book;
 import java.util.Arrays;
 import java.util.Random;
@@ -74,66 +75,81 @@ public class DataCreateController {
         System.out.println("break");
 
         Random random = new Random();
+        String loremIpsum = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. " +
+                "Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis " +
+                "dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu";
 
         Article article1 = new Article();
         article1.setAuthor(author1);
         article1.setCategories(Arrays.asList(category1));
         article1.setTitle("Artykuł " + random.nextInt(1000) );
+        article1.setContent(loremIpsum);
 
         Article article2 = new Article();
         article2.setAuthor(author2);
         article2.setCategories(Arrays.asList(category1, category3));
         article2.setTitle("Artykuł " + random.nextInt(1000) );
+        article2.setContent(loremIpsum);
 
         Article article3 = new Article();
         article3.setAuthor(author3);
         article3.setCategories(Arrays.asList(category1, category5));
         article3.setTitle("Artykuł " + random.nextInt(1000) );
+        article3.setContent(loremIpsum);
 
         Article article4 = new Article();
         article4.setAuthor(author1);
         article4.setCategories(Arrays.asList(category2));
         article4.setTitle("Artykuł " + random.nextInt(1000) );
+        article4.setContent(loremIpsum);
 
         Article article5 = new Article();
         article5.setAuthor(author2);
         article5.setCategories(Arrays.asList(category2, category1));
         article5.setTitle("Artykuł " + random.nextInt(1000) );
+        article5.setContent(loremIpsum);
 
         Article article6 = new Article();
         article6.setAuthor(author3);
         article6.setCategories(Arrays.asList(category2, category3));
         article6.setTitle("Artykuł " + random.nextInt(1000) );
+        article6.setContent(loremIpsum);
 
         Article article7 = new Article();
         article7.setAuthor(author1);
         article7.setCategories(Arrays.asList(category3));
         article7.setTitle("Artykuł " + random.nextInt(1000) );
+        article7.setContent(loremIpsum);
 
         Article article8 = new Article();
         article8.setAuthor(author2);
         article8.setCategories(Arrays.asList(category3));
         article8.setTitle("Artykuł " + random.nextInt(1000) );
+        article8.setContent(loremIpsum);
 
         Article article9 = new Article();
         article9.setAuthor(author3);
         article9.setCategories(Arrays.asList(category4, category5));
         article9.setTitle("Artykuł " + random.nextInt(1000) );
+        article9.setContent(loremIpsum);
 
         Article article10 = new Article();
         article10.setAuthor(author1);
         article10.setCategories(Arrays.asList(category4));
         article10.setTitle("Artykuł " + random.nextInt(1000) );
+        article10.setContent(loremIpsum);
 
         Article article11 = new Article();
         article11.setAuthor(author2);
         article11.setCategories(Arrays.asList(category5));
         article11.setTitle("Artykuł " + random.nextInt(1000) );
+        article11.setContent(loremIpsum);
 
         Article article12 = new Article();
         article12.setAuthor(author3);
         article12.setCategories(Arrays.asList(category2));
         article12.setTitle("Artykuł " + random.nextInt(1000) );
+        article12.setContent(loremIpsum);
 
         articleDao.create(article1);
         articleDao.create(article2);
