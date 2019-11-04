@@ -1,5 +1,6 @@
 package pl.coderslab.repositories;
 
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Repository;
 import pl.coderslab.entities.Author;
 
@@ -19,7 +20,9 @@ public class AuthorDao {
     }
 
     public Author readById(long id) {
-        return entityManager.find(Author.class, id);
+        Author author = entityManager.find(Author.class, id);
+        Hibernate.initialize(author.getArticles());
+        return author;
     }
 
     public void update(Author entity) {

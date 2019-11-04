@@ -43,9 +43,10 @@ public class DataCreateController {
         authorDao.create(author2);
         authorDao.create(author3);
 
-        authorDao.update(author1);
-        authorDao.update(author2);
-        authorDao.update(author3);
+        author1 = authorDao.readById(author1.getId());
+        author2 = authorDao.readById(author2.getId());
+        author3 = authorDao.readById(author3.getId());
+
 
         Category category1 = new Category();
         category1.setName("Polityka");
@@ -64,11 +65,13 @@ public class DataCreateController {
         categoryDao.create(category4);
         categoryDao.create(category5);
 
-        categoryDao.update(category1);
-        categoryDao.update(category2);
-        categoryDao.update(category3);
-        categoryDao.update(category4);
-        categoryDao.update(category5);
+        category1 = categoryDao.readById(category1.getId());
+        category2 = categoryDao.readById(category2.getId());
+        category3 = categoryDao.readById(category3.getId());
+        category4 = categoryDao.readById(category4.getId());
+        category5 = categoryDao.readById(category5.getId());
+
+        System.out.println("break");
 
         Random random = new Random();
 
@@ -144,6 +147,7 @@ public class DataCreateController {
         articleDao.create(article10);
         articleDao.create(article11);
         articleDao.create(article12);
+
 
         return "Database filled"; }
 }

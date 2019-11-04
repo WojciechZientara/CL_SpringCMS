@@ -17,7 +17,7 @@ public class Category {
 
     private String description;   //default value: nullable = true
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "categories_articles",
             joinColumns = @JoinColumn(name = "category_id"),
             inverseJoinColumns = @JoinColumn(name = "article_id"))

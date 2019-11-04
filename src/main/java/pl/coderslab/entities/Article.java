@@ -20,7 +20,7 @@ public class Article {
     @JoinColumn(name = "author_id")
     private Author author;
 
-    @ManyToMany(mappedBy = "articles")
+    @ManyToMany(mappedBy = "articles", fetch = FetchType.EAGER)
     private List<Category> categories = new ArrayList<>();
 
     private String content;
