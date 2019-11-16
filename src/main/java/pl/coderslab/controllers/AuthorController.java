@@ -25,7 +25,7 @@ public class AuthorController {
 
     @GetMapping("/authors/")
     public String displayAuthors(Model model){
-        List<Author> authors = authorDao.readById();
+        List<Author> authors = authorDao.getAllAuthors();
         Author emptyAuthor = new Author();
         model.addAttribute("authors", authors);
         model.addAttribute("author", emptyAuthor);

@@ -15,7 +15,7 @@ public class Author {
     private String firstName;
     private String lastName;
 
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE)
     private List<Article> articles = new ArrayList<>();
 
     public Author() {
