@@ -38,13 +38,20 @@ public class CategoryDao {
     }
 
     public void delete(Category entity) {
+            Query query = entityManager.createNativeQuery("DELETE FROM articles_categories WHERE categories_id = ?1");
+            query.setParameter(1, entity.getId());
+            query.executeUpdate();
         entityManager.remove(entityManager.contains(entity) ?
                 entity : entityManager.merge(entity)); }
 
     public List<Category> getAllCategories() {
         Query query = entityManager.createQuery(
                 "SELECT c FROM Category c");
-        return query.getResultList();
+        List<Category> categories = query.getResultList();
+        for (Category category : categories) {
+            Hibernate.initialize(category.getArticles());
+        }
+        return  categories;
     }
 
     public EntityManager getEntityManager() {
