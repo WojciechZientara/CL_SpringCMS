@@ -23,7 +23,9 @@ public class Article {
     @ManyToMany
     private List<Category> categories = new ArrayList<>();
 
+    @Column(columnDefinition = "TEXT")
     private String content;
+
     private LocalDateTime created;
     private LocalDateTime updated;
 

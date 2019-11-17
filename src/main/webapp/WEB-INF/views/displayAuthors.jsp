@@ -32,7 +32,7 @@
                         </td>
                         <td style="vertical-align: middle">
                             <a href="${pageContext.request.contextPath}/authors/update/${author.id}">Edytuj</a><br>
-                            <a href="${pageContext.request.contextPath}/authors/delete/${author.id}" onclick="confirm('Czy na pewno chcesz usunąć kategorię?')">Usuń</a>
+                            <a href="${pageContext.request.contextPath}/authors/delete/${author.id}" onclick="confirm('Czy na pewno chcesz usunąć autora?')">Usuń</a>
                         </td>
                     </tr>
                 </c:forEach>

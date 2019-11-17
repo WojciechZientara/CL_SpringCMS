@@ -48,6 +48,15 @@ public class ArticleDao {
         return list;
     }
 
+    public List<Article> getAllArticles() {
+        Query query = entityManager.createQuery("SELECT a FROM Article a");
+        List<Article> list = query.getResultList();
+        for (Article article : list) {
+            Hibernate.initialize(article.getCategories());
+        }
+        return list;
+    }
+
     public List<Article> getAllArticlesInCategory(Category category) {
         long categoryId = category.getId();
         Query query = entityManager.createQuery(
