@@ -5,6 +5,7 @@
 <html>
 <head>
     <title>Categories</title>
+    <style> <%@ include file="/assets/style.css" %> </style>
 </head>
 <body>
 <table>
@@ -12,8 +13,10 @@
         <td style="vertical-align: top">
             <table>
                 <form:form method="post" modelAttribute="category">
-                    <tr><td>name:</td><td><form:input path="name" /></td></tr>
-                    <tr><td>description:</td><td><form:textarea path="description" rows="3" cols="20"/></td></tr>
+                    <tr><td>name:</td><td><form:input path="name" />
+                        <br><form:errors path="name" cssClass="error"/></td></tr>
+                    <tr><td>description:</td><td><form:textarea path="description" rows="3" cols="20"/>
+                        <br><form:errors path="description" cssClass="error"/></td></tr>
                     <tr><td></td><td><button type="submit" style="float: right;">Submit</button> </td></tr>
                 </form:form>
             </table>

@@ -3,6 +3,7 @@ package pl.coderslab.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,7 @@ import pl.coderslab.repositories.CategoryDao;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.awt.print.Book;
 import java.util.List;
 
@@ -34,8 +36,10 @@ public class CategoryController {
     }
 
     @PostMapping("/categories/")
-    public String saveCategory(@ModelAttribute Category category, Model model){
-        categoryDao.create(category);
+    public String saveCategory(@Valid Category category, BindingResult result, Model model){
+        if (!result.hasErrors()) {
+            categoryDao.create(category);
+        }
         List<Category> categories = categoryDao.getAllCategories();
         model.addAttribute("categories", categories);
         return "displayCategories";
@@ -52,13 +56,18 @@ public class CategoryController {
     }
 
     @PostMapping("/categories/update/{categoryId}")
-    public void saveUpdateCategory(@PathVariable long categoryId, @ModelAttribute Category category, Model model,
-                                    HttpServletRequest request, HttpServletResponse response) throws Exception {
-        category.setId(categoryId);
-        categoryDao.update(category);
-        List<Category> categories = categoryDao.getAllCategories();
-        model.addAttribute("categories", categories);
-        response.sendRedirect(request.getContextPath() + "/categories/");
+    public String saveUpdateCategory(@PathVariable long categoryId, @Valid Category category, BindingResult result,
+                       Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        if (!result.hasErrors()) {
+            category.setId(categoryId);
+            categoryDao.update(category);
+            response.sendRedirect(request.getContextPath() + "/categories/");
+            return null;
+        } else {
+            List<Category> categories = categoryDao.getAllCategories();
+            model.addAttribute("categories", categories);
+            return "displayCategories";
+        }
     }
 
 
