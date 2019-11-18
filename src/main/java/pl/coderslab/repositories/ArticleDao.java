@@ -49,7 +49,16 @@ public class ArticleDao {
     }
 
     public List<Article> getAllArticles() {
-        Query query = entityManager.createQuery("SELECT a FROM Article a");
+        Query query = entityManager.createQuery("SELECT a FROM Article a WHERE a.draft = false");
+        List<Article> list = query.getResultList();
+        for (Article article : list) {
+            Hibernate.initialize(article.getCategories());
+        }
+        return list;
+    }
+
+    public List<Article> getAllDrafts() {
+        Query query = entityManager.createQuery("SELECT a FROM Article a WHERE a.draft = true");
         List<Article> list = query.getResultList();
         for (Article article : list) {
             Hibernate.initialize(article.getCategories());

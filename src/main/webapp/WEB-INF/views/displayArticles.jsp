@@ -52,8 +52,17 @@
                                 ${article.content}<br><br>
                         </td>
                         <td style="vertical-align: middle">
-                            <a href="${pageContext.request.contextPath}/articles/update/${article.id}">Edytuj</a><br>
-                            <a href="${pageContext.request.contextPath}/articles/delete/${article.id}" onclick="confirm('Czy na pewno chcesz usunąć artykuł?')">Usuń</a>
+                            <c:choose>
+                                <c:when test = "${article.draft == true}">
+                                    <a href="${pageContext.request.contextPath}/drafts/update/${article.id}">Edytuj</a><br>
+                                    <a href="${pageContext.request.contextPath}/drafts/delete/${article.id}" onclick="confirm('Czy na pewno chcesz usunąć szkic artykułu?')">Usuń</a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="${pageContext.request.contextPath}/articles/update/${article.id}">Edytuj</a><br>
+                                    <a href="${pageContext.request.contextPath}/articles/delete/${article.id}" onclick="confirm('Czy na pewno chcesz usunąć artykuł?')">Usuń</a>
+                                </c:otherwise>
+                            </c:choose>
+
                         </td>
                     </tr>
                 </c:forEach>

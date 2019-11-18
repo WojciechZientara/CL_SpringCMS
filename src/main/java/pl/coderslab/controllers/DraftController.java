@@ -15,14 +15,14 @@ import pl.coderslab.entities.Category;
 import pl.coderslab.repositories.ArticleDao;
 import pl.coderslab.repositories.AuthorDao;
 import pl.coderslab.repositories.CategoryDao;
-import pl.coderslab.validationGroups.ArticleGroup;
+import pl.coderslab.validationGroups.DraftGroup;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
-public class ArticleController {
+public class DraftController {
 
     @Autowired
     AuthorDao authorDao;
@@ -45,57 +45,59 @@ public class ArticleController {
         return categoryDao.getAllCategories();
     }
 
-    @GetMapping("/articles/")
+    @GetMapping("/drafts/")
     public String displayArticles(Model model){
-        List<Article> articles = articleDao.getAllArticles();
+        List<Article> articles = articleDao.getAllDrafts();
         Article emptyArticle = new Article();
         model.addAttribute("articles", articles);
         model.addAttribute("article", emptyArticle);
         return "displayArticles";
     }
 
-    @PostMapping("/articles/")
-    public String saveArticle(@Validated({ArticleGroup.class}) Article article, BindingResult result, Model model,
+    @PostMapping("/drafts/")
+    public String saveArticle(@Validated({DraftGroup.class}) Article article, BindingResult result, Model model,
                               HttpServletRequest request, HttpServletResponse response) throws Exception {
         if (!result.hasErrors()) {
+            article.setDraft(true);
             articleDao.create(article);
-            response.sendRedirect(request.getContextPath() + "/articles/");
+            response.sendRedirect(request.getContextPath() + "/drafts/");
             return null;
         }
-        List<Article> articles = articleDao.getAllArticles();
+        List<Article> articles = articleDao.getAllDrafts();
         model.addAttribute("articles", articles);
         return "displayArticles";
     }
 
-    @GetMapping("/articles/update/{articleId}")
+    @GetMapping("/drafts/update/{articleId}")
     public String updateArticle(@PathVariable long articleId, Model model,
                                   HttpServletRequest request, HttpServletResponse response) throws Exception {
-        List<Article> articles = articleDao.getAllArticles();
+        List<Article> articles = articleDao.getAllDrafts();
         Article article = articleDao.readById(articleId);
         model.addAttribute("articles", articles);
         model.addAttribute("article", article);
         return "displayArticles";
     }
 
-    @PostMapping("/articles/update/{articleId}")
-    public String saveUpdateArticle(@PathVariable long articleId, @Validated ({ArticleGroup.class}) Article article, BindingResult result,
+    @PostMapping("/drafts/update/{articleId}")
+    public String saveUpdateArticle(@PathVariable long articleId, @Validated({DraftGroup.class}) Article article, BindingResult result,
                       Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
         if (!result.hasErrors()) {
             article.setId(articleId);
+            article.setDraft(true);
             articleDao.update(article);
-            response.sendRedirect(request.getContextPath() + "/articles/");
+            response.sendRedirect(request.getContextPath() + "/drafts/");
             return null;
         }
-        List<Article> articles = articleDao.getAllArticles();
+        List<Article> articles = articleDao.getAllDrafts();
         model.addAttribute("articles", articles);
         return "displayArticles";
     }
 
 
-    @GetMapping("/articles/delete/{articleId}")
+    @GetMapping("/drafts/delete/{articleId}")
     public void deleteArticle(@PathVariable long articleId,
                                 HttpServletRequest request, HttpServletResponse response) throws Exception {
         articleDao.delete(articleDao.readById(articleId));
-        response.sendRedirect(request.getContextPath() + "/articles/");
+        response.sendRedirect(request.getContextPath() + "/drafts/");
     }
 }

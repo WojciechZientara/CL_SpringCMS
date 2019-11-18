@@ -2,6 +2,8 @@ package pl.coderslab.entities;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
+import pl.coderslab.validationGroups.ArticleGroup;
+import pl.coderslab.validationGroups.DraftGroup;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -18,8 +20,8 @@ public class Article {
     private long id;
 
     @Column(length = 200)
-    @Size(max = 200)
-    @NotBlank
+    @Size(max = 200, groups = {ArticleGroup.class, DraftGroup.class})
+    @NotBlank(groups = {ArticleGroup.class, DraftGroup.class})
     private String title;
 
     @ManyToOne
@@ -27,16 +29,18 @@ public class Article {
     private Author author;
 
     @ManyToMany
-    @NotEmpty
+    @NotEmpty(groups = ArticleGroup.class)
     private List<Category> categories = new ArrayList<>();
 
     @Column(columnDefinition = "TEXT")
-    @Size(max = 500)
-    @NotBlank
+    @Size(max = 500, groups = {ArticleGroup.class, DraftGroup.class})
+    @NotBlank(groups = {ArticleGroup.class, DraftGroup.class})
     private String content;
 
     private LocalDateTime created;
     private LocalDateTime updated;
+
+    private boolean draft;
 
     @PrePersist
     public void prePersist() {
@@ -105,5 +109,13 @@ public class Article {
 
     public void setUpdated(LocalDateTime updated) {
         this.updated = updated;
+    }
+
+    public boolean isDraft() {
+        return draft;
+    }
+
+    public void setDraft(boolean draft) {
+        this.draft = draft;
     }
 }
