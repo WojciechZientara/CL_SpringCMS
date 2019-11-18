@@ -3,6 +3,7 @@ package pl.coderslab.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,7 @@ import pl.coderslab.repositories.AuthorDao;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -33,8 +35,10 @@ public class AuthorController {
     }
 
     @PostMapping("/authors/")
-    public String saveAuthor(@ModelAttribute Author author, Model model){
-        authorDao.create(author);
+    public String saveAuthor(@Valid Author author, BindingResult result, Model model){
+        if (!result.hasErrors()) {
+            authorDao.create(author);
+        }
         List<Author> authors = authorDao.getAllAuthors();
         model.addAttribute("authors", authors);
         return "displayAuthors";
@@ -51,13 +55,17 @@ public class AuthorController {
     }
 
     @PostMapping("/authors/update/{authorId}")
-    public void saveUpdateAuthor(@PathVariable long authorId, @ModelAttribute Author author, Model model,
-                                    HttpServletRequest request, HttpServletResponse response) throws Exception {
-        author.setId(authorId);
-        authorDao.update(author);
+    public String saveUpdateAuthor(@PathVariable long authorId, @Valid Author author, BindingResult result,
+                         Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        if (!result.hasErrors()) {
+            author.setId(authorId);
+            authorDao.update(author);
+            response.sendRedirect(request.getContextPath() + "/authors/");
+            return null;
+        }
         List<Author> authors = authorDao.getAllAuthors();
         model.addAttribute("authors", authors);
-        response.sendRedirect(request.getContextPath() + "/authors/");
+        return "displayAuthors";
     }
 
 

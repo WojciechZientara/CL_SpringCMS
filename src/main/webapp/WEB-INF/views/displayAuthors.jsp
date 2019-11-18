@@ -5,6 +5,7 @@
 <html>
 <head>
     <title>Authors</title>
+    <style> <%@ include file="/assets/style.css" %> </style>
 </head>
 <body>
 <table>
@@ -12,8 +13,10 @@
         <td style="vertical-align: top">
             <table>
                 <form:form method="post" modelAttribute="author">
-                    <tr><td>firstName:</td><td><form:input path="firstName" /></td></tr>
-                    <tr><td>lastName:</td><td><form:input path="lastName" /></td></tr>
+                    <tr><td>firstName:</td><td><form:input path="firstName" />
+                        <br><form:errors path="firstName" cssClass="error" /></td></tr>
+                    <tr><td>lastName:</td><td><form:input path="lastName" />
+                        <br><form:errors path="lastName" cssClass="error" /></td></tr>
                     <tr><td></td><td><button type="submit" style="float: right;">Submit</button> </td></tr>
                 </form:form>
             </table>
