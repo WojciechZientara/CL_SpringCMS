@@ -6,6 +6,7 @@
 <html>
 <head>
     <title>Articles</title>
+    <style> <%@ include file="/assets/style.css" %> </style>
 </head>
 <body>
 <table>
@@ -13,12 +14,16 @@
         <td style="vertical-align: top">
             <table>
                 <form:form method="post" modelAttribute="article">
-                    <tr><td>title:</td><td><form:input path="title" /></td></tr>
+                    <tr><td>title:</td><td><form:input path="title" />
+                        <br><form:errors path="title" cssClass="error" /></td></tr>
                     <tr><td>author:</td><td><form:select path="author" items="${authors}"
-                                    itemValue="id" itemLabel="lastName" /></td></tr>
+                                    itemValue="id" itemLabel="lastName" />
+                        <br><form:errors path="author" cssClass="error" /></td></tr>
                     <tr><td>categories:</td><td><form:select path="categories" items="${categories}"
-                                                         itemValue="id" itemLabel="name" /></td></tr>
-                    <tr><td>content:</td><td><form:textarea cols="40" rows="10" path="content" /></td></tr>
+                                                         itemValue="id" itemLabel="name" />
+                        <br><form:errors path="categories" cssClass="error" /></td></tr>
+                    <tr><td>content:</td><td><form:textarea cols="40" rows="10" path="content" />
+                        <br><form:errors path="content" cssClass="error" /></td></tr>
                     <tr><td></td><td><button type="submit" style="float: right;">Submit</button> </td></tr>
                 </form:form>
             </table>

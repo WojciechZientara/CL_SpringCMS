@@ -3,6 +3,7 @@ package pl.coderslab.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import pl.coderslab.repositories.CategoryDao;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -52,12 +54,16 @@ public class ArticleController {
     }
 
     @PostMapping("/articles/")
-    public void saveArticle(@ModelAttribute Article article, Model model,
-                              HttpServletRequest request, HttpServletResponse response) throws Exception {
-        articleDao.create(article);
+    public String saveArticle(@Valid Article article, BindingResult result, Model model,
+                            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        if (!result.hasErrors()) {
+            articleDao.create(article);
+            response.sendRedirect(request.getContextPath() + "/articles/");
+            return null;
+        }
         List<Article> articles = articleDao.getAllArticles();
         model.addAttribute("articles", articles);
-        response.sendRedirect(request.getContextPath() + "/articles/");
+        return "displayArticles";
     }
 
     @GetMapping("/articles/update/{articleId}")
@@ -71,13 +77,17 @@ public class ArticleController {
     }
 
     @PostMapping("/articles/update/{articleId}")
-    public void saveUpdateArticle(@PathVariable long articleId, @ModelAttribute Article article, Model model,
-                                    HttpServletRequest request, HttpServletResponse response) throws Exception {
-        article.setId(articleId);
-        articleDao.update(article);
+    public String saveUpdateArticle(@PathVariable long articleId, @Valid Article article, BindingResult result,
+                      Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        if (!result.hasErrors()) {
+            article.setId(articleId);
+            articleDao.update(article);
+            response.sendRedirect(request.getContextPath() + "/articles/");
+            return null;
+        }
         List<Article> articles = articleDao.getAllArticles();
         model.addAttribute("articles", articles);
-        response.sendRedirect(request.getContextPath() + "/articles/");
+        return "displayArticles";
     }
 
 
