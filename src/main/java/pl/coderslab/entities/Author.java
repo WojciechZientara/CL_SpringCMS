@@ -1,5 +1,7 @@
 package pl.coderslab.entities;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +14,9 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotBlank
     private String firstName;
+    @NotBlank
     private String lastName;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE)

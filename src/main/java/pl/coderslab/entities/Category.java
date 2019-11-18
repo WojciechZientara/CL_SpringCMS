@@ -1,6 +1,7 @@
 package pl.coderslab.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ public class Category {
     private long id;
 
     @Column(length = 100)
+    @Size(min = 5)
     private String name;
 
     private String description;   //default value: nullable = true
